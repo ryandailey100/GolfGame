@@ -4,6 +4,8 @@ using System.Collections;
 public class Ball : MonoBehaviour {
 
 	public Rigidbody ball;
+	public GameplayController GameplayController;
+
 	private bool InMotion = false;
 
 	void OnCollisionEnter (Collision col)
