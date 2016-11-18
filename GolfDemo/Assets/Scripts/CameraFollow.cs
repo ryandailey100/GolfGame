@@ -5,7 +5,7 @@ public class CameraFollow : MonoBehaviour {
 
 	public Transform lookAt;
 	public Transform camTransform;
-	public GameplayController GameController;
+	public GameplayController GameplayController;
 
 	private const float X_ANGLE_MIN = 4.0f;
 	private const float X_ANGLE_MAX = 25.0f;
@@ -47,7 +47,7 @@ public class CameraFollow : MonoBehaviour {
 		}
 			
 		//Player Movement
-		if (GameController.HasSwung == false) {
+		if (GameplayController.HasSwung == false) {
 
 			//Move Player around ball
 			Vector3 dir1 = new Vector3 (0.0f, 0.0f, -0.5f);
@@ -69,11 +69,11 @@ public class CameraFollow : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
-		//PC Mouse Movement
-		currentX += Input.GetAxis ("Mouse X") * sensitivityX;
-		currentY += Input.GetAxis ("Mouse Y") * sensitivityY;
-		//currentX = Mathf.Clamp (currentX, X_ANGLE_MIN, X_ANGLE_MAX);
-		currentY = Mathf.Clamp (currentY, Y_ANGLE_MIN, Y_ANGLE_MAX);
+//		//PC Mouse Movement
+//		currentX += Input.GetAxis ("Mouse X") * sensitivityX;
+//		currentY += Input.GetAxis ("Mouse Y") * sensitivityY;
+//		//currentX = Mathf.Clamp (currentX, X_ANGLE_MIN, X_ANGLE_MAX);
+//		currentY = Mathf.Clamp (currentY, Y_ANGLE_MIN, Y_ANGLE_MAX);
 
 		if (Input.touchCount > 0) { //Mobile Touch
 
@@ -83,18 +83,21 @@ public class CameraFollow : MonoBehaviour {
 		} 
 		else if (Input.touchCount == 0) { //No Touch
 
-//			//Go Back to Defult Position
-//			if (OriginalX != 0.0f) {
-//
-//				if (OriginalX < camTransform.position.x && camTransform.position.x - OriginalX >= 0.03f) {
-//
-//					currentX -= 1f;
-//				}
-//				else if (OriginalX > camTransform.position.x && OriginalX - camTransform.position.x >= 0.03f) { 
-//
-//					currentX += 1f;
-//				}
-//			}
+			if (GameplayController.HasSwung == false) { 
+
+				//Go Back to Defult Position
+				if (OriginalX != 0.0f) {
+
+					if (OriginalX < camTransform.position.x && camTransform.position.x - OriginalX >= 0.03f) {
+
+						currentX -= 1f;
+					}
+					else if (OriginalX > camTransform.position.x && OriginalX - camTransform.position.x >= 0.03f) { 
+
+						currentX += 1f;
+					}
+				}
+			}
 		}
 			
 	}
