@@ -4,6 +4,7 @@ using System.Collections;
 public class Ball : MonoBehaviour {
 
 	public Rigidbody ball;
+	private bool InMotion = false;
 
 	void OnCollisionEnter (Collision col)
 	{
@@ -27,6 +28,14 @@ public class Ball : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
+
+		if (ball.velocity == Vector3.zero && InMotion == true) {
+			//End Turn
+
+
+		}
+			 
 	
 	}
 	
