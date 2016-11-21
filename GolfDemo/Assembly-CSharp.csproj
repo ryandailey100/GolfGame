@@ -53,11 +53,19 @@
      <Compile Include="Assets\Scripts\FlagHole.cs" />
      <Compile Include="Assets\Scripts\GameplayController.cs" />
      <Compile Include="Assets\Scripts\GolfPlayer.cs" />
+     <None Include="Assets\Vectrosity 5\Vectrosity 5 Documentation\Vectrosity5 Upgrade Guide.txt" />
+     <None Include="Assets\What to import!.txt" />
+     <None Include="Assets\Vectrosity 4\Vectrosity 4 Documentation\Vectrosity 4 Upgrade Guide.txt" />
+     <None Include="Assets\Vectrosity 5\Vectrosity 5 Documentation\Vectrosity changelog.txt" />
+     <None Include="Assets\Vectrosity 4\Vectrosity 4 Documentation\Vectrosity changelog.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Networking">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
+ </Reference>
+ <Reference Include="Vectrosity">
+ <HintPath>/Users/Ryan/Documents/Dev Work/GitHub/GolfGame/GolfDemo/Assets/Plugins/Vectrosity/Vectrosity.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

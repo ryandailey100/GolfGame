@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CameraFollow : MonoBehaviour {
+public class CameraFollow : MonoBehaviour {//add zoom in and out slider
 
 	public Transform lookAt;
 	public Transform camTransform;
@@ -79,8 +79,12 @@ public class CameraFollow : MonoBehaviour {
 		if (Input.touchCount > 0) { //Mobile Touch
 
 			currentCameraX += Input.touches [0].deltaPosition.x / 50.0f * sensitivityX;
-			currentY += Input.touches [0].deltaPosition.y / 50.0f * sensitivityY;
-			currentY = Mathf.Clamp (currentY, Y_ANGLE_MIN, Y_ANGLE_MAX);
+
+			if (GameplayController.cameraView == GameplayController.CameraView.PeakView || GameplayController.HasSwung == true) {
+
+				currentY += Input.touches [0].deltaPosition.y / 50.0f * sensitivityY;
+				currentY = Mathf.Clamp (currentY, Y_ANGLE_MIN, Y_ANGLE_MAX);
+			}
 		} 
 		else if (Input.touchCount == 0) { //No Touch
 
