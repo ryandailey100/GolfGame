@@ -16,6 +16,15 @@ public class GameplayController : MonoBehaviour {
 	private CanvasGroup btnCanvas_Shoot;
 	private CanvasGroup sliderCanvas;
 
+	private Vector3 P1_BallPosition = Vector3.zero;
+	private Vector3 P2_BallPosition = Vector3.zero;
+
+	private int P1_Strokes = 0;
+	private int P2_Strokes = 0;
+
+	private Turn WhosTurn;
+
+	private TeeGround TeeMarker;
 
 	private CourseMap Map; // <--Selected Map
 
@@ -47,6 +56,21 @@ public class GameplayController : MonoBehaviour {
 		PlayerView
 	}
 
+	private enum Turn
+	{
+		Player1,
+		Player2
+	}
+
+	public enum TeeGround
+	{
+		Blue,  //Champions Tee
+		White, //Men's Tee
+		Red,   //Women's Tee
+		Green  //Senior's Tee
+
+	}
+
 	// Use this for initialization
 	void Start () {
 	
@@ -68,39 +92,11 @@ public class GameplayController : MonoBehaviour {
 		if (GameObject.Find ("SliderPower") != null)
 			sliderCanvas = GameObject.Find ("SliderPower").GetComponent<CanvasGroup> ();
 
+		TeeMarker = TeeGround.White;
+		SetMap (6);
 
-//		PathPoints = new List<Vector3>();
-//		pathLine = new VectorLine (
-//			"Path",
-//			PathPoints,
-//			lineMaterial, 
-//			12.0); //Or Dotted
 	}
 
-	private void SamplePoints() {
-
-		//Reset Variables
-
-
-
-//		bool running = true;
-//		while (running) {
-//
-//			PathPoints[pathIndex] =  GhostBall.position;
-//
-//			if (++pathIndex == maxPoints) {
-//				running = false;
-//			}
-//
-//			StartCoroutine(TimeDelay(0.05f));
-//
-//			pathLine.Draw3D ();
-////			pathLine.maxDrawIndex = pathIndex-1;
-////			VectorLine.SetLine3D (Color.black, pathLine);
-////			Vector.SetTextureScale (pathLine, 1.0);
-//
-//		}
-	}
 
 	IEnumerator TimeDelay(float time) {
 		yield return new WaitForSeconds(time);
@@ -183,19 +179,67 @@ public class GameplayController : MonoBehaviour {
 		//Set new map
 		Map = new CourseMap();
 		//Set Hole
-		Map.Hole = Hole;
+		Map.Hole = Hole; //gameObject.Find("NameOfTheGameObjectTarget").GetComponent<NameOfTheScrit>().NameOfTheProperty = ...;
 		//Set Flag
 		if (GameObject.Find ("flag hole " + Hole) != null)
 			Map.Flag = GameObject.Find ("flag hole " + Hole).GetComponent<GameObject>();
-		//Set Tee's
+		
+		//Set Tee's       <-------------------Check for TeeMarker Color!!!!!
+		//Left Blue Tee Marker
+		if (GameObject.Find ("tee_markers hole " + Hole + "/" + "tee_marker_blue_L") != null)
+			Map.Tee_Blue_Left = GameObject.Find ("tee_markers hole " + Hole + "/" + "tee_marker_blue_L").GetComponent<Transform>();
+		//Right Blue Tee Marker
+		if (GameObject.Find ("tee_markers hole " + Hole + "/" + "tee_marker_blue_R") != null)
+			Map.Tee_Blue_Right = GameObject.Find ("tee_markers hole " + Hole + "/" + "tee_marker_blue_R").GetComponent<Transform>();
+		//Left White Tee Marker
+		if (GameObject.Find ("tee_markers hole " + Hole + "/" + "tee_marker_white_L") != null)
+			Map.Tee_White_Left = GameObject.Find ("tee_markers hole " + Hole + "/" + "tee_marker_white_L").GetComponent<Transform>();
+		//Right White Tee Marker
+		if (GameObject.Find ("tee_markers hole " + Hole + "/" + "tee_marker_white_R") != null)
+			Map.Tee_White_Right = GameObject.Find ("tee_markers hole " + Hole + "/" + "tee_marker_white_R").GetComponent<Transform>();
+		//Left Red Tee Marker
+		if (GameObject.Find ("tee_markers hole " + Hole + "/" + "tee_marker_red_L") != null)
+			Map.Tee_Red_Left = GameObject.Find ("tee_markers hole " + Hole + "/" + "tee_marker_red_L").GetComponent<Transform>();
+		//Right Red Tee Marker
+		if (GameObject.Find ("tee_markers hole " + Hole + "/" + "tee_marker_red_R") != null)
+			Map.Tee_Red_Right = GameObject.Find ("tee_markers hole " + Hole + "/" + "tee_marker_red_R").GetComponent<Transform>();
+		//Left Green Tee Marker
+		if (GameObject.Find ("tee_markers hole " + Hole + "/" + "tee_marker_green_L") != null)
+			Map.Tee_Green_Left = GameObject.Find ("tee_markers hole " + Hole + "/" + "tee_marker_green_L").GetComponent<Transform>();
+		//Right Green Tee Marker
+		if (GameObject.Find ("tee_markers hole " + Hole + "/" + "tee_marker_green_R") != null)
+			Map.Tee_Green_Right = GameObject.Find ("tee_markers hole " + Hole + "/" + "tee_marker_green_R").GetComponent<Transform>();
 
-
-
+		SetPlayerPosition ();
+	
 
 	}
 
+	private void SetPlayerPosition() {
 
+		if (WhosTurn == Turn.Player1 && P1_BallPosition != Vector3.zero)
+			Ball_Position.position = P1_BallPosition;
+		else if (WhosTurn == Turn.Player1 && P1_BallPosition != Vector3.zero)
+			Ball_Position.position = P1_BallPosition;
+		else {
+			//Defult Position
+			if (TeeMarker == TeeGround.Blue) {
+				Ball_Position.position = Vector3.Lerp (Map.Tee_Blue_Left.position, Map.Tee_Blue_Right.position, 0.5f) + new Vector3(0,1,0);
+			}
+			else if (TeeMarker == TeeGround.White) {
+				Ball_Position.position = Vector3.Lerp (Map.Tee_White_Left.position, Map.Tee_White_Right.position, 0.5f) + new Vector3(0,1,0);
+			}
+			else if (TeeMarker == TeeGround.Red) {
+				Ball_Position.position = Vector3.Lerp (Map.Tee_Red_Left.position, Map.Tee_Red_Right.position, 0.5f) + new Vector3(0,1,0);
+			}
+			else if (TeeMarker == TeeGround.Green) {
+				Ball_Position.position = Vector3.Lerp (Map.Tee_Green_Left.position, Map.Tee_Green_Right.position, 0.5f) + new Vector3(0,1,0);
+			}
 
+		}
+
+	}
+		
 
 	//Set up next shot
 	public void NextShot() {
