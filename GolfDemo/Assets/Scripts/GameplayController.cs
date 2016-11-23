@@ -17,6 +17,9 @@ public class GameplayController : MonoBehaviour {
 	private CanvasGroup sliderCanvas;
 
 
+	private CourseMap Map; // <--Selected Map
+
+
 	public bool HasSwung = false;
 	private bool BallHit = false;
 
@@ -97,7 +100,6 @@ public class GameplayController : MonoBehaviour {
 ////			Vector.SetTextureScale (pathLine, 1.0);
 //
 //		}
-
 	}
 
 	IEnumerator TimeDelay(float time) {
@@ -143,6 +145,14 @@ public class GameplayController : MonoBehaviour {
 			//Use the Saved rotation position
 			cameraFollow.currentCameraX = cameraFollow.currentPlayerX;
 
+			//Hide UI elements
+			btnCanvas_Shoot.alpha = 1;
+			sliderCanvas.alpha = 1;
+
+			//Disable UI elements
+			btnCanvas_Shoot.interactable = true;
+			sliderCanvas.interactable = true;
+
 			btn_ChangeView.GetComponentInChildren<Text>().text = "Peak";
 		}
 		else {      //Switch to Peak View
@@ -155,10 +165,37 @@ public class GameplayController : MonoBehaviour {
 			//Set OriginalCamX
 			cameraFollow.OriginalCamX = cameraFollow.camTransform.position.x;
 
+			//Hide UI elements
+			btnCanvas_Shoot.alpha = 0;
+			sliderCanvas.alpha = 0;
+
+			//Disable UI elements
+			btnCanvas_Shoot.interactable = false;
+			sliderCanvas.interactable = false;
+
 			btn_ChangeView.GetComponentInChildren<Text>().text = "Move";
 
 		}
 	}
+
+	private void SetMap(int Hole) {
+
+		//Set new map
+		Map = new CourseMap();
+		//Set Hole
+		Map.Hole = Hole;
+		//Set Flag
+		if (GameObject.Find ("flag hole " + Hole) != null)
+			Map.Flag = GameObject.Find ("flag hole " + Hole).GetComponent<GameObject>();
+		//Set Tee's
+
+
+
+
+	}
+
+
+
 
 	//Set up next shot
 	public void NextShot() {
@@ -199,7 +236,7 @@ public class GameplayController : MonoBehaviour {
 			//Apply Force
 			Quaternion rotation = Quaternion.Euler (0, cameraFollow.currentCameraX, 0);
 			Vector3 dir = new Vector3 (0.0f, 1.0f, 1.0f); //Forward and Up
-			Vector3 ForceVector = rotation * dir;
+			Vector3 ForceVector = new Vector3(1, 10, -19); //rotation * dir
 
 			ForceVector.Normalize(); //normalize
 

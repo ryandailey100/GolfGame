@@ -50,7 +50,7 @@ public class DontGoThroughThings : MonoBehaviour {
 				if (hitInfo.collider.isTrigger && hitInfo.collider.gameObject.tag != "FlagHole") 
 					hitInfo.collider.SendMessage("OnTriggerEnter", myCollider);
 
-				if (!hitInfo.collider.isTrigger)
+				if (!hitInfo.collider.isTrigger && hitInfo.collider.gameObject.tag != "FlagHole")
 					myRigidbody.position = hitInfo.point - (movementThisStep / movementMagnitude) * partialExtent; 
 
 			}

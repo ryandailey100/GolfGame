@@ -48,7 +48,7 @@
      <Compile Include="Assets\Scripts\Ball.cs" />
      <Compile Include="Assets\Scripts\Camera\TouchCamera.cs" />
      <Compile Include="Assets\Scripts\CameraFollow.cs" />
-     <Compile Include="Assets\Scripts\CourseMaps.cs" />
+     <Compile Include="Assets\Scripts\CourseMap.cs" />
      <Compile Include="Assets\Scripts\DontGoThroughThings.cs" />
      <Compile Include="Assets\Scripts\FlagHole.cs" />
      <Compile Include="Assets\Scripts\GameplayController.cs" />
