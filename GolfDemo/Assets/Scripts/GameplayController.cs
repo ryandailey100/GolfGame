@@ -280,7 +280,7 @@ public class GameplayController : MonoBehaviour {
 			//Apply Force
 			Quaternion rotation = Quaternion.Euler (0, cameraFollow.currentCameraX, 0);
 			Vector3 dir = new Vector3 (0.0f, 1.0f, 1.0f); //Forward and Up
-			Vector3 ForceVector = new Vector3(1, 10, -19); //rotation * dir
+			Vector3 ForceVector = rotation * dir; //1, 10, -19
 
 			ForceVector.Normalize(); //normalize
 
